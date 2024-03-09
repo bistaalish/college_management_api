@@ -2,14 +2,14 @@
 const express = require('express');
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose')
-// const errorHandler = require('./middlewares/errorHandler')
+const errorHandler = require('./middlewares/errorHandler')
 // const todoRoutes = require('./routes/todoRoutes');
 
 require('dotenv').config()
 
 // Initiating the process
 const app = express();
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 3000;
 const dbName = process.env.DB_NAME || 'College'
 // Dummy data - you can replace this with a database later
 
@@ -29,6 +29,9 @@ mongoose.connect(decodedURI + "/"+dbName, {
   console.error('Error connecting to MongoDB:', error);
 
 });
+
+// Error handling middleware
+app.use(errorHandler);
 
 
 app.listen(PORT, () => {

@@ -4,7 +4,7 @@
   "description": "College Management API using nodejs",
   "main": "app.js",
   "scripts": {
-    "start" : "nodemon app.js",
+    "start" : "nodemon src/app.js",
     "test": "npm test"
   },
   "repository": {
