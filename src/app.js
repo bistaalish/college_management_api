@@ -9,7 +9,7 @@ require('dotenv').config()
 
 // Initiating the process
 const app = express();
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 3000;
 const dbName = process.env.DB_NAME || 'College'
 // Dummy data - you can replace this with a database later
 
