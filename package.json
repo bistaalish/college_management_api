@@ -1,0 +1,33 @@
+{
+  "name": "college_management_api",
+  "version": "1.0.0",
+  "description": "College Management API using nodejs",
+  "main": "app.js",
+  "scripts": {
+    "start" : "nodemon app.js",
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bistaalish/college_management_api.git"
+  },
+  "keywords": [
+    "College",
+    "API",
+    "nodejs",
+    "express",
+    "mongodb"
+  ],
+  "author": "Alish Bista",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bistaalish/college_management_api/issues"
+  },
+  "homepage": "https://github.com/bistaalish/college_management_api#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.3",
+    "mongoose": "^8.2.1"
+  }
+}
