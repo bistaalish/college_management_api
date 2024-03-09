@@ -29,6 +29,10 @@ const studentSchema = new mongoose.Schema({
     type: Date,
     required: [true, 'Date of birth is required'] // Error message for required field
   },
+  year: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Year' // Reference to the Year model
+  },
   phone: {
     type: String,
     validate: {
