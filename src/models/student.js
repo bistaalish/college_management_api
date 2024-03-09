@@ -58,7 +58,7 @@ const studentSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User', // Reference to the User model
-    required: [true, 'User is required'] // Error message for required field
+    required: false // Error message for required field
   },
 });
 
