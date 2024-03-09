@@ -1,7 +1,8 @@
-const {createDepartment,getAllDepartments,getDepartmentById} = require('./department')
+const {createDepartment,getAllDepartments,getDepartmentById,updateDepartmentById} = require('./department')
 
 module.exports = {
     createDepartment,
     getAllDepartments,
-    getDepartmentById
+    getDepartmentById,
+    updateDepartmentById
 }

@@ -20,7 +20,7 @@ const createDepartment = async (data) => {
 
 const getAllDepartments = async () => {
     try{
-        const Departments = await Department.find()
+        const Departments = await Department.find({deleted: false})
         if (Departments.length == 0) {
             return {
                 success: false,
@@ -62,8 +62,31 @@ const getDepartmentById = async (id) => {
         }
     }
 }
+const updateDepartmentById = async (id,data) => {
+    try {
+        const updatedDepartment = await Department.findByIdAndUpdate(id,data,{new: true})
+        if(!updatedDepartment){
+            return {
+                success: false,
+                message: "No Todo Found by that ID."
+            }
+        }
+        return {
+            success: true,
+            message: "Update Successful",
+            data: updatedDepartment
+        }
+    }
+    catch (err) {
+        return {
+            success: false,
+            message: err.message
+        }
+    }
+}
 module.exports = {
     createDepartment,
     getAllDepartments,
-    getDepartmentById
+    getDepartmentById,
+    updateDepartmentById
 }
