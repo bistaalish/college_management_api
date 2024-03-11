@@ -27,3 +27,16 @@ exports.getAllTeachers = async (limit=10) => {
         return createResponse(false,err.message,[])
     }
 }
+
+exports.getTeacherById = async (id) => {
+    try {
+        const selectedTeacher = await teacherModel.findOne({deleted:false,_id:id})
+        if (!selectedTeacher){
+            throw new Error (`No Teacher found by: ${id}`)
+        }
+        return createResponse(true,`ID:${id}`,selectedTeacher)
+    }
+    catch (err) {
+        return createResponse(false,err.message,[])
+    }
+}

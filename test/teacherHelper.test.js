@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const {classModel,teacherModel} = require("../src/models")
 const {
     createTeacher,
-    getAllTeachers
+    getAllTeachers,
+    getTeacherById
 } = require("../src/helpers")
 
 require('dotenv').config()
@@ -81,5 +82,24 @@ describe("Teacher Helper Functions", () => {
       it("should return no record on teacher database",async ()=>{
       const allTeachers = await getAllTeachers()
       expect(allTeachers.success).toEqual(false)
+      })
+      it("should return teacher by ID", async ()=> {
+        const createdClass = await classModel.create({name:"12"})
+        const TeacherData = {
+            name: "Sam Llyoid",
+            username: "LSam",
+            password: "Sam123!",
+            email: "lsam@gmail.com",
+            phone :"9807999753",
+            classes: [createdClass._id]
+        }
+        const createdTeachers = await teacherModel.create(TeacherData)
+        const selectedTeacher = await getTeacherById(createdTeachers._id)
+        expect(selectedTeacher.success).toEqual(true)
+      })
+      it("should return an error no teacher found by that id", async ()=>{
+        const id = "123"
+        const selectedTeacher = await getTeacherById(id)
+        expect(selectedTeacher.success).toEqual(false)
       })
 })
