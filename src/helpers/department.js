@@ -2,91 +2,73 @@ const {Department} = require('../models/')
 
 const createDepartment = async (data) => {
     try {
-        const newDepartment = await Department.create(data)
-        return {
-            success: true,
-            message: "Added Department successfully",
-            data: newDepartment
+        // Validation: Ensure required fields are present
+        if (!data.name || !data.code) {
+            throw new Error("Name and location are required fields.");
         }
+        const newDepartment = await Department.create(data)
+        return createResponse(true,"Added Department Successfully!",newDepartment)
     }
     catch (err) {
-        return {
-            success: false,
-            message: err.message,
-            data: null
-        }
+        return createResponse(false,err.message,null)
     }
 }
 
+const createResponse = (success,message,data) => {
+    return {success,message,data}
+}
 const getAllDepartments = async () => {
     try{
         const Departments = await Department.find({deleted: false})
         if (Departments.length == 0) {
-            return {
-                success: false,
-                message: "No Department found"
-            }
+            throw new Error ("No Department found")
         }
-        return {
-            success: true,
-            message: "All the Departments",
-            data: Departments
-        }
+        return createResponse(true,"All the Departments",Departments)
     }
     catch (err) {
-        return {
-            success: false,
-            message: err.message
-        }
+        return createResponse(false,err.message,[])
     }
 }
 const getDepartmentById = async (id) => {
     try {
-        const department = await Department.findById(id)
+        const department = await Department.findOne({_id:id,deleted:false})
         if (!department) {
-            return {
-                success: false,
-                message: "No Department Found"
-            }
+            throw new Error ("No Department Found")
         }
-        return {
-            success: true,
-            message: `department: ${department._id}`,
-            data: department
-        }
+        return createResponse(true,`department: ${department._id}`,department)
     }
     catch (err) {
-        return {
-            success: false,
-            message: err.message
-        }
+        return createResponse(false,err.message,{})
     }
 }
 const updateDepartmentById = async (id,data) => {
     try {
         const updatedDepartment = await Department.findByIdAndUpdate(id,data,{new: true})
         if(!updatedDepartment){
-            return {
-                success: false,
-                message: "No Todo Found by that ID."
-            }
+            throw new Error ("No Todo Found by that ID.")
         }
-        return {
-            success: true,
-            message: "Update Successful",
-            data: updatedDepartment
-        }
+        return createResponse(true,"Update Successful",updatedDepartment)
     }
     catch (err) {
-        return {
-            success: false,
-            message: err.message
+        return createResponse(false,err.message,null)
+    }
+}
+const deleteDepartmentById = async (id) => {
+    try {
+        const deletedDepartment = await Department.findByIdAndUpdate(id,{deleted: true},{new: true})
+        if(!deletedDepartment){
+            throw new Error ("No Todo Found by That ID.")
         }
+        return createResponse(true,`Deleted ${id}`,deletedDepartment)
+    }
+    catch (err) {
+        return createResponse(false,`Unable to find ${id}`,{})
     }
 }
 module.exports = {
     createDepartment,
     getAllDepartments,
     getDepartmentById,
-    updateDepartmentById
+    updateDepartmentById,
+    deleteDepartmentById
 }

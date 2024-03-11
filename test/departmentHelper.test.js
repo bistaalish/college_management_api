@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const {Department} = require('../src/models')
-const {createDepartment,getAllDepartments,getDepartmentById,updateDepartmentById} = require('../src/helpers')
+const {createDepartment,getAllDepartments,getDepartmentById,updateDepartmentById, deleteDepartmentById} = require('../src/helpers')
 
 require('dotenv').config()
 const decodedURI = Buffer.from(process.env.MONGODB_URI, 'base64').toString('utf-8');
@@ -79,10 +79,19 @@ describe('Department helper functions', () => {
         }
         const createdDepartment = await Department.create(departmentData)
         const updatedDepartment = await updateDepartmentById(createdDepartment._id,{name:"Business in Management",code: "BIM"})
-        console.log(updatedDepartment)
         expect(updatedDepartment.success).toEqual(true)
         expect(updatedDepartment.data._id).toEqual(createdDepartment._id)
         expect(updatedDepartment.data.code).toEqual("BIM")
+    })
+    it("should softdelete Department", async () => {
+        const departmentData = {
+            name: "Business in Management",
+            code: "BIM"
+        }
+        const createdDepartment = await Department.create(departmentData)
+        const deletedDepartment = await deleteDepartmentById(createdDepartment._id)
+        expect(deletedDepartment.success).toEqual(true)
+        expect(deletedDepartment.data.deleted).toEqual(true)
     })
 })
 
