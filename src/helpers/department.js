@@ -1,4 +1,5 @@
 const {Department} = require('../models/')
+const createResponse = require("./createResponse")
 
 const createDepartment = async (data) => {
     try {
@@ -14,9 +15,7 @@ const createDepartment = async (data) => {
     }
 }
 
-const createResponse = (success,message,data) => {
-    return {success,message,data}
-}
+
 const getAllDepartments = async () => {
     try{
         const Departments = await Department.find({deleted: false})

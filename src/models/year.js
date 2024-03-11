@@ -7,13 +7,9 @@ const yearSchema = new mongoose.Schema({
     required: [true, 'Year name is required'], // Error message for required field
     unique: true
   },
-  start_date: {
-    type: Date,
-    required: [true, 'Start date is required'] // Error message for required field
-  },
-  end_date: {
-    type: Date,
-    required: [true, 'End date is required'] // Error message for required field
+  deleted: {
+    type: Boolean,
+    default: true
   }
 });
 
