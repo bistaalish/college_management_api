@@ -3,14 +3,14 @@ const {classModel,teacherModel} = require("../src/models")
 const {
     createTeacher,
     getAllTeachers,
-    getTeacherById
+    getTeacherById,
+    updateTeacherById
 } = require("../src/helpers")
 
 require('dotenv').config()
 const decodedURI = Buffer.from(process.env.MONGODB_URI, 'base64').toString('utf-8') + "/"+"College";
 
 describe("Teacher Helper Functions", () => {
-    
     beforeAll(async () => {
         await mongoose.connect(decodedURI, {
           useNewUrlParser: true,
@@ -101,5 +101,20 @@ describe("Teacher Helper Functions", () => {
         const id = "123"
         const selectedTeacher = await getTeacherById(id)
         expect(selectedTeacher.success).toEqual(false)
+      })
+      it("should update a Teacher", async () => {
+        const createdClass = await classModel.create({name:"12"})
+        const TeacherData = {
+            name: "Sam Llyoid",
+            username: "LSam",
+            password: "Sam123!",
+            email: "lsam@gmail.com",
+            phone :"9807999753",
+            classes: [createdClass._id]
+        }
+        const createdTeacher = await teacherModel.create(TeacherData)
+        const updatedTeacher = await updateTeacherById(createdTeacher._id,{name: "Pink Floyd"})
+        expect(updatedTeacher.success).toEqual(true)
+        expect(updatedTeacher.data.name).toEqual("Pink Floyd")
       })
 })

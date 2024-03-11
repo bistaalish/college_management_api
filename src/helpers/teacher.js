@@ -40,3 +40,16 @@ exports.getTeacherById = async (id) => {
         return createResponse(false,err.message,[])
     }
 }
+
+exports.updateTeacherById = async (id,data) => {
+    try {
+        const updatedTeacher = await teacherModel.findByIdAndUpdate(id,data,{new:true})
+        if(!updatedTeacher) {
+            throw new Error (`Update Teacher Unsuccessful`)
+        }
+        return createResponse(true,"Update Successful",updatedTeacher)
+    }
+    catch (err) {
+        return createResponse(false,err.message,[])
+    }
+}
