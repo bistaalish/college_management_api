@@ -15,9 +15,9 @@ exports.createClass = async (data) => {
     }
 }
 
-exports.getAllClasses = async() => {
+exports.getAllClasses = async(limit=10) => {
     try {
-        const allClasses = await classModel.find({deleted: false})
+        const allClasses = await classModel.find({deleted: false}).limit(limit)
         if (allClasses.length == 0) {
             throw new Error ("No class is present in DB.")
         }

@@ -10,11 +10,11 @@ const teacherSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true
+    required: [true, "No password Provided"]
   },
   name: {
     type: String,
-    required: true,
+    required: [true,"name is required"],
     trim: true
   },
   email: {
@@ -32,9 +32,18 @@ const teacherSchema = new mongoose.Schema({
   },
   classes: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Class'
-  }]
-});
+    ref: 'Class',
+    required: false
+  }],
+  deleted: {
+    type: Boolean,
+    default: false
+  },
+  active: {
+    type: Boolean,
+    default: true
+  }
+},{ timestamps: true });
 
 const Teacher = mongoose.model('Teacher', teacherSchema);
 
