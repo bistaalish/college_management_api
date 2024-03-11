@@ -14,3 +14,16 @@ exports.createTeacher = async (data) =>{
         return createResponse(false,err.message,null)
     }
 }
+
+exports.getAllTeachers = async (limit=10) => {
+    try {
+        const allTeachers = await teacherModel.find({deleted:false}).limit(limit)
+        if (allTeachers.length == 0){
+            throw new Error ("No Teachers recorded")
+        }
+        return createResponse(true,"All Teachers",allTeachers)
+    }
+    catch (err) {
+        return createResponse(false,err.message,[])
+    }
+}

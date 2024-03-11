@@ -7,7 +7,8 @@ const {
 
 } = require('./class');
 const {
-    createTeacher
+    createTeacher,
+    getAllTeachers
 } = require("./teacher")
 module.exports = {
     createClass,
@@ -15,5 +16,6 @@ module.exports = {
     getClassById,
     updateClassById,
     deleteClassById,
-    createTeacher
+    createTeacher,
+    getAllTeachers
 }
