@@ -53,3 +53,42 @@ exports.updateTeacherById = async (id,data) => {
         return createResponse(false,err.message,[])
     }
 }
+
+exports.deleteTeacherById = async (id) => {
+    try {
+        const deletedTeacher = await teacherModel.findByIdAndUpdate(id,{deleted: true},{new:true})
+        if (!deletedTeacher) {
+            throw new Error (`Delete Teacher Unsuccessful`)
+        }
+        return createResponse(true,"Delete successful",deletedTeacher)
+    }
+    catch (err) {
+        return createResponse(false,err.message,[])
+    }
+}
+
+exports.deactivateTeacherAccount = async (id) => {
+    try {
+        const deactivatedTeacher = await teacherModel.findByIdAndUpdate(id,{active:false},{new: true})
+        if (!deactivatedTeacher) {
+            throw new Error (`Teacher Account deactive Unsuccessful`)
+        }
+        return createResponse(true,"Deactive successful",deactivatedTeacher)
+    }
+    catch (err) {
+        return createResponse(false,err.message,[])
+    }
+}
+
+exports.activeTeacherAccount = async (id) => {
+    try {
+        const activatedTeacher = await teacherModel.findByIdAndUpdate(id,{active:true},{new: true})
+        if (!activatedTeacher) {
+            throw new Error (`Teacher Account deactive Unsuccessful`)
+        }
+        return createResponse(true,"Deactive successful",activatedTeacher)
+    }
+    catch (err) {
+        return createResponse(false,err.message,[])
+    }
+}

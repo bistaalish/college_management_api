@@ -4,7 +4,10 @@ const {
     createTeacher,
     getAllTeachers,
     getTeacherById,
-    updateTeacherById
+    updateTeacherById,
+    deleteTeacherById,
+    deactivateTeacherAccount,
+    activeTeacherAccount
 } = require("../src/helpers")
 
 require('dotenv').config()
@@ -116,5 +119,51 @@ describe("Teacher Helper Functions", () => {
         const updatedTeacher = await updateTeacherById(createdTeacher._id,{name: "Pink Floyd"})
         expect(updatedTeacher.success).toEqual(true)
         expect(updatedTeacher.data.name).toEqual("Pink Floyd")
+      })
+      it("should soft delete a Teacher", async () => {
+        const createdClass = await classModel.create({name:"12"})
+        const TeacherData = {
+            name: "Sam Llyoid",
+            username: "LSam",
+            password: "Sam123!",
+            email: "lsam@gmail.com",
+            phone :"9807999753",
+            classes: [createdClass._id]
+        }
+        const createdTeacher = await teacherModel.create(TeacherData)
+        const deletedTeacher = await deleteTeacherById(createdTeacher._id)
+        expect(deletedTeacher.success).toEqual(true)
+        expect(deletedTeacher.data.deleted).toEqual(true)
+      })
+      it("should deactive a teacher", async () => {
+        const createdClass = await classModel.create({name:"12"})
+        const TeacherData = {
+            name: "Sam Llyoid",
+            username: "LSam",
+            password: "Sam123!",
+            email: "lsam@gmail.com",
+            phone :"9807999753",
+            classes: [createdClass._id]
+        }
+        const createdTeacher = await teacherModel.create(TeacherData)
+        const Teacher = await deactivateTeacherAccount(createdTeacher._id)
+        expect(Teacher.success).toEqual(true)
+        expect(Teacher.data.active).toEqual(false)
+      })
+      it("should active a teacher", async () => {
+        const createdClass = await classModel.create({name:"12"})
+        const TeacherData = {
+            name: "Sam Llyoid",
+            username: "LSam",
+            password: "Sam123!",
+            email: "lsam@gmail.com",
+            phone :"9807999753",
+            active: false,
+            classes: [createdClass._id]
+        }
+        const createdTeacher = await teacherModel.create(TeacherData)
+        const Teacher = await activeTeacherAccount(createdTeacher._id)
+        expect(Teacher.success).toEqual(true)
+        expect(Teacher.data.active).toEqual(true)
       })
 })

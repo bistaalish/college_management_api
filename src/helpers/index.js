@@ -10,7 +10,10 @@ const {
     createTeacher,
     getAllTeachers,
     getTeacherById,
-    updateTeacherById
+    updateTeacherById,
+    deleteTeacherById,
+    deactivateTeacherAccount,
+    activeTeacherAccount
 } = require("./teacher")
 module.exports = {
     createClass,
@@ -21,5 +24,8 @@ module.exports = {
     createTeacher,
     getAllTeachers,
     getTeacherById,
-    updateTeacherById
+    updateTeacherById,
+    deleteTeacherById,
+    deactivateTeacherAccount,
+    activeTeacherAccount
 }
