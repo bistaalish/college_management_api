@@ -3,8 +3,9 @@ const express = require('express');
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose')
 const errorHandler = require('./middlewares/errorHandler')
-// const todoRoutes = require('./routes/todoRoutes');
 
+// const todoRoutes = require('./routes/todoRoutes');
+const adminRoutes = require('./routes/admin');
 require('dotenv').config()
 
 // Initiating the process
@@ -29,6 +30,8 @@ mongoose.connect(decodedURI + "/"+dbName, {
   console.error('Error connecting to MongoDB:', error);
 
 });
+// Routes
+app.use('/api', adminRoutes);
 
 // Error handling middleware
 app.use(errorHandler);
